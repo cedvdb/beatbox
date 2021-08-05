@@ -20,10 +20,12 @@ class PlayerBloc extends Cubit<PlayerState> {
   }
 
   pause() {
+    _playerService.pause();
     emit(Paused(Duration(seconds: 1)));
   }
 
   stop() {
+    _playerService.stop();
     emit(Stopped());
   }
 }

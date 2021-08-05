@@ -27,41 +27,27 @@ class PlayerView extends StatefulWidget {
   _PlayerViewState createState() => _PlayerViewState();
 }
 
-class _PlayerViewState extends State<PlayerView>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _playCtrl;
-
-  @override
-  void initState() {
-    super.initState();
-    _playCtrl =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
-  }
-
-  @override
-  void dispose() {
-    _playCtrl.dispose();
-    super.dispose();
-  }
-
+class _PlayerViewState extends State<PlayerView> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PlayerBloc, PlayerState>(builder: (ctx, state) {
-      return state is Loading
-          ? CircularProgressIndicator()
-          : Row(
-              children: [
-                PlayButton(
-                  isPlaying: state is Playing,
-                  onPlay: () => ctx.read<PlayerBloc>().play(),
-                  onPause: () => ctx.read<PlayerBloc>().pause(),
-                ),
-                StopButton(
-                  isPlaying: state is Playing,
-                  onStop: () => ctx.read<PlayerBloc>().stop(),
-                ),
-              ],
-            );
-    });
+    return BlocBuilder<PlayerBloc, PlayerState>(
+      builder: (ctx, state) {
+        return state is Loading
+            ? CircularProgressIndicator()
+            : Row(
+                children: [
+                  PlayButton(
+                    isPlaying: state is Playing,
+                    onPlay: () => ctx.read<PlayerBloc>().play(),
+                    onPause: () => ctx.read<PlayerBloc>().pause(),
+                  ),
+                  StopButton(
+                    isPlaying: state is Playing,
+                    onStop: () => ctx.read<PlayerBloc>().stop(),
+                  ),
+                ],
+              );
+      },
+    );
   }
 }

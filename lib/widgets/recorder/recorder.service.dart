@@ -15,10 +15,11 @@ class RecorderService {
     _progress$ = StreamController();
 
     Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_progress$ != null)
+      if (_progress$ != null) {
         _progress$!.add(Duration(seconds: timer.tick));
-      else
+      } else {
         timer.cancel();
+      }
     });
 
     return _progress$!.stream.asBroadcastStream();
@@ -26,7 +27,7 @@ class RecorderService {
 
   Future<String> stop() async {
     final path = await _recorder.stop();
-    _progress$!.close();
+    await _progress$!.close();
     _progress$ = null;
     return path!;
   }

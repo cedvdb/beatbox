@@ -23,6 +23,7 @@ class _PlayButtonState extends State<PlayButton>
 
   @override
   void initState() {
+    print(widget.isPlaying);
     super.initState();
     _playCtrl =
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));
@@ -39,13 +40,13 @@ class _PlayButtonState extends State<PlayButton>
     super.didUpdateWidget(old);
     if (old.isPlaying == widget.isPlaying) return;
     if (widget.isPlaying)
-      _playCtrl.forward();
-    else
       _playCtrl.reverse();
+    else
+      _playCtrl.forward();
   }
 
   void toggle() {
-    final isPlaying = _playCtrl.status == AnimationStatus.dismissed;
+    final isPlaying = _playCtrl.status == AnimationStatus.forward;
     if (isPlaying) {
       widget.onPlay();
     } else {
@@ -57,7 +58,7 @@ class _PlayButtonState extends State<PlayButton>
   Widget build(BuildContext context) {
     return RoundedButton(
       onPressed: toggle,
-      child: AnimatedIcon(icon: AnimatedIcons.play_pause, progress: _playCtrl),
+      child: AnimatedIcon(icon: AnimatedIcons.pause_play, progress: _playCtrl),
     );
   }
 }

@@ -13,11 +13,7 @@ class RecorderBloc extends Cubit<RecorderState> {
     _recorderSrv
         .record()
         .takeUntil(Stream.fromFuture(this.stream.drain()))
-        .doOnCancel(() {
-      print('close');
-    }).listen((duration) {
-      emit(Recording(duration));
-    });
+        .listen((duration) => emit(Recording(duration)));
   }
 
   stopRecording() async {
