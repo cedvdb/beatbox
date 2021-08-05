@@ -8,12 +8,13 @@ import '../buttons/play_button.dart';
 
 class Player extends StatelessWidget {
   final String path;
+
   const Player(this.path);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (ctx) => PlayerBloc(),
+      create: (ctx) => PlayerBloc(path),
       child: PlayerView(),
     );
   }
@@ -46,19 +47,21 @@ class _PlayerViewState extends State<PlayerView>
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PlayerBloc, PlayerState>(builder: (ctx, state) {
-      return Row(
-        children: [
-          PlayButton(
-            isPlaying: state is Playing,
-            onPlay: () => ctx.read<PlayerBloc>().play(),
-            onPause: () => ctx.read<PlayerBloc>().pause(),
-          ),
-          StopButton(
-            isPlaying: state is Playing,
-            onStop: () => ctx.read<PlayerBloc>().stop(),
-          ),
-        ],
-      );
+      return state is Loading
+          ? CircularProgressIndicator()
+          : Row(
+              children: [
+                PlayButton(
+                  isPlaying: state is Playing,
+                  onPlay: () => ctx.read<PlayerBloc>().play(),
+                  onPause: () => ctx.read<PlayerBloc>().pause(),
+                ),
+                StopButton(
+                  isPlaying: state is Playing,
+                  onStop: () => ctx.read<PlayerBloc>().stop(),
+                ),
+              ],
+            );
     });
   }
 }

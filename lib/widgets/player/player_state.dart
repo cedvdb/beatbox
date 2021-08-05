@@ -1,5 +1,7 @@
 class PlayerState {}
 
+class Loading extends PlayerState {}
+
 class Playing extends PlayerState {
   final Duration duration;
   Playing(this.duration);

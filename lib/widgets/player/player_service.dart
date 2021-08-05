@@ -4,7 +4,7 @@ class PlayerService {
   AudioPlayer _audioPlayer = AudioPlayer();
 
   Future<Duration?> load(String path) {
-    return _audioPlayer.setFilePath(path);
+    return _audioPlayer.setAudioSource(AudioSource.uri(Uri.parse(path)));
   }
 
   play() {
