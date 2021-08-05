@@ -37,6 +37,7 @@ class _PlayButtonState extends State<PlayButton>
 
   @override
   void didUpdateWidget(PlayButton old) {
+    print('did update');
     super.didUpdateWidget(old);
     if (old.isPlaying == widget.isPlaying) return;
     if (widget.isPlaying)
@@ -46,11 +47,10 @@ class _PlayButtonState extends State<PlayButton>
   }
 
   void toggle() {
-    final isPlaying = _playCtrl.status == AnimationStatus.forward;
-    if (isPlaying) {
-      widget.onPlay();
-    } else {
+    if (widget.isPlaying) {
       widget.onPause();
+    } else {
+      widget.onPlay();
     }
   }
 

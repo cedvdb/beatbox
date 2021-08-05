@@ -15,11 +15,13 @@ class PlayerBloc extends Cubit<PlayerState> {
   }
 
   play() {
+    print('play');
     _playerService.play();
     emit(Playing(Duration(seconds: 1)));
   }
 
   pause() {
+    print('pause');
     _playerService.pause();
     emit(Paused(Duration(seconds: 1)));
   }
