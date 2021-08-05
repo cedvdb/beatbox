@@ -1,4 +1,4 @@
-import 'package:beatbox/screens/home_screen.dart';
+import 'package:beatbox/screens/mixer_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         primarySwatch: Colors.pink,
       ),
-      home: HomeScreen(),
+      home: MixerScreen(),
     );
   }
 }
