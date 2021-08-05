@@ -1,5 +1,4 @@
-import 'package:beatbox/theme/spacing.dart';
-import 'package:beatbox/widgets/rounded_button.dart';
+import 'rounded_button.dart';
 import 'package:flutter/material.dart';
 
 class RoundedIconButton extends StatelessWidget {

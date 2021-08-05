@@ -1,21 +1,30 @@
+import 'package:beatbox/widgets/buttons/record_button.dart';
 import 'package:beatbox/widgets/recorder/recorder_bloc.dart';
 import 'package:beatbox/widgets/recorder/recorder_state.dart';
-import 'package:beatbox/widgets/rounded_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Recorder extends StatelessWidget {
+  final Function(String) onComplete;
+
+  Recorder({
+    required this.onComplete,
+  });
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (ctx) => RecorderBloc(),
-      child: RecorderView(),
+      child: RecorderView(onComplete: onComplete),
     );
   }
 }
 
 class RecorderView extends StatelessWidget {
-  const RecorderView();
+  final Function(String) onComplete;
+  const RecorderView({
+    required this.onComplete,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +34,7 @@ class RecorderView extends StatelessWidget {
           onPressedStart: () => context.read<RecorderBloc>().record(),
           onPressedStop: () => context.read<RecorderBloc>().stopRecording(),
         ),
-        BlocBuilder<RecorderBloc, RecorderState>(
+        BlocConsumer<RecorderBloc, RecorderState>(
           builder: (ctx, state) {
             if (state is NotRecording) {
               return Text('not recording');
@@ -40,6 +49,11 @@ class RecorderView extends StatelessWidget {
               );
             }
             return Container();
+          },
+          listener: (ctx, state) {
+            if (state is RecordingCompleted) {
+              return onComplete(state.path);
+            }
           },
         ),
       ],
@@ -80,29 +94,6 @@ class RecordingLabel extends StatelessWidget {
           ),
         Text(formatDuration(duration)),
       ],
-    );
-  }
-}
-
-class RecordButton extends StatelessWidget {
-  final Function() onPressedStart;
-  final Function() onPressedStop;
-
-  const RecordButton({
-    required this.onPressedStart,
-    required this.onPressedStop,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      key: key,
-      onLongPressStart: (_) => onPressedStart(),
-      onLongPressEnd: (_) => onPressedStop(),
-      child: RoundedIconButton(
-        onPressed: () {},
-        iconData: Icons.mic,
-      ),
     );
   }
 }

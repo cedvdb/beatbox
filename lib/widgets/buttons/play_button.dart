@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../rounded_button.dart';
+import 'rounded_button.dart';
 
 class PlayButton extends StatefulWidget {
   final bool isPlaying;

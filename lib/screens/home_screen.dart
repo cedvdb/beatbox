@@ -1,3 +1,4 @@
+import 'package:beatbox/widgets/beat_machine/beat_machine.dart';
 import 'package:beatbox/widgets/player/player.dart';
 import 'package:beatbox/widgets/recorder/recorder.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +14,7 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Recorder(),
-          SizedBox(height: 20),
-          Player(),
+          BeatMachine(),
         ],
       ),
     );
