@@ -30,25 +30,25 @@ class RecorderView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        RecordButton(
-          onPressedStart: () => context.read<RecorderBloc>().record(),
-          onPressedStop: () => context.read<RecorderBloc>().stopRecording(),
-        ),
         BlocConsumer<RecorderBloc, RecorderState>(
           builder: (ctx, state) {
-            if (state is NotRecording) {
-              return Text('not recording');
-            }
-            if (state is Recording) {
-              return RecordingLabel(state.duration);
-            }
-            if (state is RecordingCompleted) {
-              return RecordingLabel(
-                state.duration,
-                isRecording: false,
-              );
-            }
-            return Container();
+            return Row(
+              children: [
+                RecordButton(
+                  enabled: state is! NoPermissions,
+                  onPressedStart: () => context.read<RecorderBloc>().record(),
+                  onPressedStop: () =>
+                      context.read<RecorderBloc>().stopRecording(),
+                ),
+                if (state is NotRecording) Text('Hold to record'),
+                if (state is Recording) RecordingLabel(state.duration),
+                if (state is RecordingCompleted)
+                  RecordingLabel(
+                    state.duration,
+                    isRecording: false,
+                  ),
+              ],
+            );
           },
           listener: (ctx, state) {
             if (state is RecordingCompleted) {

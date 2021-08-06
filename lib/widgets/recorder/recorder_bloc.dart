@@ -6,7 +6,14 @@ import 'package:rxdart/rxdart.dart';
 class RecorderBloc extends Cubit<RecorderState> {
   RecorderService _recorderSrv = RecorderService();
 
-  RecorderBloc() : super(const NotRecording());
+  RecorderBloc() : super(const NoPermissions()) {
+    _init();
+  }
+
+  _init() async {
+    final hasPerm = await _recorderSrv.askPermission();
+    if (hasPerm) emit(const NotRecording());
+  }
 
   record() {
     if (state is Recording) return;

@@ -8,6 +8,10 @@ class RecorderService {
   final _recorder = Record();
   StreamController<Duration>? _progress$;
 
+  Future<bool> askPermission() {
+    return _recorder.hasPermission();
+  }
+
   Stream<Duration> record() {
     if (_progress$ != null) throw AlreadyRecordingError();
 

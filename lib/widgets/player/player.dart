@@ -45,6 +45,10 @@ class _PlayerViewState extends State<PlayerView> {
                     isPlaying: state is Playing,
                     onStop: () => ctx.read<PlayerBloc>().stop(),
                   ),
+                  Slider(
+                    value: 0,
+                    onChanged: (v) {},
+                  ),
                 ],
               );
       },

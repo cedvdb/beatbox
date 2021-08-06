@@ -2,6 +2,10 @@ class RecorderState {
   const RecorderState();
 }
 
+class NoPermissions extends RecorderState {
+  const NoPermissions();
+}
+
 class NotRecording extends RecorderState {
   const NotRecording();
 }
