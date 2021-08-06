@@ -1,4 +1,5 @@
 import 'package:beatbox/widgets/buttons/stop_button.dart';
+import 'package:beatbox/widgets/player/audio_position.dart';
 import 'package:beatbox/widgets/player/player_bloc.dart';
 import 'package:beatbox/widgets/player/player_state.dart';
 import 'package:beatbox/widgets/player/seek_bar.dart';
@@ -31,25 +32,29 @@ class PlayerView extends StatefulWidget {
 class _PlayerViewState extends State<PlayerView> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PlayerBloc, PlayerState>(
-      builder: (ctx, state) {
-        return state is Loading
+    return BlocSelector<PlayerBloc, PlayerState, Status>(
+      selector: (state) => state.status,
+      builder: (ctx, status) {
+        return status == Status.loading
             ? CircularProgressIndicator()
             : Row(
                 children: [
                   PlayButton(
-                    isPlaying: state is Playing,
+                    isPlaying: status == Status.playing,
                     onPlay: () => ctx.read<PlayerBloc>().play(),
                     onPause: () => ctx.read<PlayerBloc>().pause(),
                   ),
                   StopButton(
-                    isPlaying: state is Playing,
+                    isPlaying: status == Status.playing,
                     onStop: () => ctx.read<PlayerBloc>().stop(),
                   ),
-                  SeekBar(
-                    duration: state.progress.duration,
-                    position: state.progress.position,
-                    bufferedPosition: state.progress.bufferedPosition,
+                  BlocSelector<PlayerBloc, PlayerState, AudioPosition>(
+                    selector: (state) => state.progress,
+                    builder: (ctx, progress) => SeekBar(
+                      duration: progress.duration,
+                      position: progress.position,
+                      bufferedPosition: progress.bufferedPosition,
+                    ),
                   ),
                 ],
               );

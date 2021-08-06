@@ -1,3 +1,4 @@
+import 'package:beatbox/widgets/player/audio_position.dart';
 import 'package:beatbox/widgets/player/player_service.dart';
 import 'package:beatbox/widgets/player/player_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,7 +7,8 @@ import 'package:rxdart/rxdart.dart';
 class PlayerBloc extends Cubit<PlayerState> {
   PlayerService _playerService = PlayerService();
 
-  PlayerBloc(String path) : super(Loading()) {
+  PlayerBloc(String path)
+      : super(PlayerState(Status.loading, AudioPosition.zero())) {
     _init(path);
   }
 
@@ -21,17 +23,17 @@ class PlayerBloc extends Cubit<PlayerState> {
   play() {
     print('play');
     _playerService.play();
-    emit(Playing(Duration(seconds: 1), state.progress));
+    emit(state.copyWith(status: Status.playing));
   }
 
   pause() {
     print('pause');
     _playerService.pause();
-    emit(Paused(Duration(seconds: 1), state.progress));
+    emit(state.copyWith(status: Status.paused));
   }
 
   stop() {
     _playerService.stop();
-    emit(Stopped());
+    emit(state.copyWith(status: Status.stopped));
   }
 }

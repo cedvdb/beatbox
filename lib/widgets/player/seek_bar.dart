@@ -15,7 +15,12 @@ class SeekBar extends StatefulWidget {
     required this.bufferedPosition,
     this.onChanged,
     this.onChangeEnd,
-  });
+  }) {
+    // print('---');
+    // print(duration);
+    // print(position);
+    // print(bufferedPosition);
+  }
 
   @override
   _SeekBarState createState() => _SeekBarState();

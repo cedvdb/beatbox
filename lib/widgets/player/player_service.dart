@@ -9,7 +9,11 @@ class PlayerService {
         [
           _audioPlayer.positionStream,
           _audioPlayer.bufferedPositionStream,
-          _audioPlayer.durationStream.map((d) => d ?? Duration.zero)
+          _audioPlayer.durationStream
+              .map((d) => d ?? Duration.zero)
+              .doOnData((event) {
+            print('duration: ' + event.toString());
+          })
         ],
         (changes) => AudioPosition(changes[0], changes[1], changes[2]),
       );

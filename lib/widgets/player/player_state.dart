@@ -1,33 +1,21 @@
 import 'package:beatbox/widgets/player/audio_position.dart';
 
-class PlayerState {
-  final AudioPosition progress;
+enum Status { loading, playing, paused, stopped }
 
-  const PlayerState(this.progress);
+class PlayerState {
+  // we use a stream here to not
+  final AudioPosition progress;
+  final Status status;
+
+  const PlayerState(this.status, this.progress);
 
   PlayerState copyWith({
     AudioPosition? progress,
+    Status? status,
   }) {
     return PlayerState(
+      status ?? this.status,
       progress ?? this.progress,
     );
   }
-}
-
-class Loading extends PlayerState {
-  const Loading() : super(const AudioPosition.zero());
-}
-
-class Playing extends PlayerState {
-  final Duration duration;
-  Playing(this.duration, AudioPosition progress) : super(progress);
-}
-
-class Paused extends PlayerState {
-  final Duration duration;
-  Paused(this.duration, AudioPosition progress) : super(progress);
-}
-
-class Stopped extends PlayerState {
-  const Stopped() : super(const AudioPosition.zero());
 }
