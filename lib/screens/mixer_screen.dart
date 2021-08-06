@@ -30,11 +30,16 @@ class MixerView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MixerScreenBloc, MixerScreenState>(
       builder: (ctx, state) => Column(
-        children: [
-          BeatMachine(
-            onRecordCompleted: () => ctx.read<MixerScreenBloc>().addMachine(),
-          ),
-        ],
+        children: List.filled(state.machines, 0)
+            .map(
+              (e) => Card(
+                child: BeatMachine(
+                  onRecordCompleted: () =>
+                      ctx.read<MixerScreenBloc>().addMachine(),
+                ),
+              ),
+            )
+            .toList(),
       ),
     );
   }

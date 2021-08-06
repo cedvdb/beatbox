@@ -1,6 +1,7 @@
 import 'package:beatbox/widgets/buttons/stop_button.dart';
 import 'package:beatbox/widgets/player/player_bloc.dart';
 import 'package:beatbox/widgets/player/player_state.dart';
+import 'package:beatbox/widgets/player/seek_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -45,9 +46,10 @@ class _PlayerViewState extends State<PlayerView> {
                     isPlaying: state is Playing,
                     onStop: () => ctx.read<PlayerBloc>().stop(),
                   ),
-                  Slider(
-                    value: 0,
-                    onChanged: (v) {},
+                  SeekBar(
+                    duration: state.progress.duration,
+                    position: state.progress.position,
+                    bufferedPosition: state.progress.bufferedPosition,
                   ),
                 ],
               );
