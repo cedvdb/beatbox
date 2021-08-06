@@ -36,4 +36,8 @@ class PlayerBloc extends Cubit<PlayerState> {
     _playerService.stop();
     emit(state.copyWith(status: Status.stopped));
   }
+
+  seek(Duration position) {
+    _playerService.seek(position);
+  }
 }

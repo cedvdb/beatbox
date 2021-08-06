@@ -16,7 +16,7 @@ class RecordButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       key: key,
-      onLongPressStart: enabled ? (_) => onPressedStart() : null,
+      onTapDown: enabled ? (_) => onPressedStart() : null,
       onLongPressEnd: enabled ? (_) => onPressedStop() : null,
       child: RoundedIconButton(
         onPressed: enabled ? () {} : null,

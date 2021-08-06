@@ -54,6 +54,8 @@ class _PlayerViewState extends State<PlayerView> {
                       duration: progress.duration,
                       position: progress.position,
                       bufferedPosition: progress.bufferedPosition,
+                      onChangeEnd: (position) =>
+                          context.read<PlayerBloc>().seek(position),
                     ),
                   ),
                 ],
